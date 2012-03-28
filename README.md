@@ -1,14 +1,21 @@
-# Description
+### Description
 
-A CLI tool for fast&neatly accessing Drupal 7 API.
+A tool for accessing Drupal 7 API fast&neatly from CLI.
 
-# Dependency
+### Dependency
 
 * Bash
 * cURL
 * Python
 
-# Usage
+### Install
 
-### $ ./d7
+$ git clone git://github.com/devtrac/d7.git
+$ cd d7
+$ mkdir -p ~/bin
+$ ln -s $PWD/d7 ~/bin/
+
+### Usage
+
+$ d7
 
