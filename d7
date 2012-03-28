@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+end_point='http://devtracd7.mountbatten.net/api'
+
+login_path="user/login.json"
+logout_path="user/logout.json"
+
+field_trip_path="views/api_fieldtrips.json?display_id=current_trip"
+site_visits_path="views/api_fieldtrips.json?display_id=sitevisits&filters[field_ftritem_field_trip_nid]=5257"
+site_places_path="views/api_fieldtrips.json?display_id=place&filters[nid]=582"
+site_action_items_path="views/api_fieldtrips.json?display_id=actionitems&args[nid]=582"
+
+cookie_file='/tmp/devtrac.cookie'
+
+login_criteria='username=tester2&password=Bl1ckberry'
+
+post() {
+  url="$end_point/$1"
+  data="$2"
+  curl --cookie-jar "$cookie_file" --cookie "$cookie_file" --data "$data" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
+}
+
+get() {
+  url="$end_point/$1"
+  curl --cookie-jar "$cookie_file" --cookie "$cookie_file" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
+}
+
+login() { #subcommand
+  post "$login_path" "$login_criteria"
+}
+
+logout() { #subcommand
+  post "$logout_path"
+}
+
+trip() { #subcommand
+  get "$field_trip_path"
+}
+
+sites() { #subcommand
+  get "$site_visits_path"
+}
+
+places() { #subcommand
+  get "$site_places_path"
+}
+
+action_items() { #subcommand
+  get "$site_action_items_path"
+}
+
+extract_subcommands() {
+  cat $0 | grep "#subcommand" | grep -v "\bgrep\b" | cut -d '(' -f 1
+}
+
+usage() {
+  idented_sub_commands=`extract_subcommands | tr ' ' '\n' | sed 's/^/#         /'`
+  cat <<-EOF
+# d7 - A CLI util to provide assistances when dealing with DevTrac Drupal7 server
+#
+# Usage
+#     ./$(basename $0) - Show this help
+#     ./$(basename $0) <sub-command> - Access API corresponding to the <sub-command>
+$idented_sub_commands
+
+EOF
+}
+
+if [[ $# -eq 0 ]]
+then
+  usage
+else
+  eval "$1"
+fi
+
