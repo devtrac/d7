@@ -17,12 +17,14 @@ login_criteria='username=tester2&password=Bl1ckberry'
 
 post() {
   url="$end_point/$1"
+  echo "POST $url" 1>&2
   data="$2"
   curl --cookie-jar "$cookie_file" --cookie "$cookie_file" --data "$data" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
 }
 
 get() {
   url="$end_point/$1"
+  echo "GET $url" 1>&2
   curl --cookie-jar "$cookie_file" --cookie "$cookie_file" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
 }
 
