@@ -13,7 +13,7 @@ node_path="node/${2:-0}.json"
 
 cookie_file='/tmp/devtrac.cookie'
 
-login_criteria='username=tester2&password=Bl1ckberry'
+login_criteria="username=${2:-username}&password=${3:-password}"
 
 post() {
   url="$end_point/$1"
