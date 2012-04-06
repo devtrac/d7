@@ -8,7 +8,7 @@ logout_path="user/logout.json"
 field_trip_path="views/api_fieldtrips.json?display_id=current_trip"
 site_visits_path="views/api_fieldtrips.json?display_id=sitevisits&filters[field_ftritem_field_trip_target_id]=${2:-0}"
 site_places_path="views/api_fieldtrips.json?display_id=place&filters[nid]=${2:-0}"
-site_action_items_path="views/api_fieldtrips.json?display_id=actionitems&args[nid]=${2:-0}"
+site_action_items_path="views/api_fieldtrips.json?display_id=actionitems&args[nid]=${2:-0}&filters[field_actionitem_status_value]=1&filters[field_actionitem_status_value]=3"
 node_path="node/${2:-0}.json"
 
 cookie_file='/tmp/devtrac.cookie'
