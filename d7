@@ -29,6 +29,14 @@ post() {
   curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" --data "$data" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
 }
 
+put() {
+  url="$end_point/$1"
+  echo "# PUT $url" 1>&2
+  filename="$2"
+  echo "# FILE $filename" 1>&2
+  curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" -T "$filename" --globoff "$url"
+}
+
 login() { #subcommand
   post "$login_path" "$login_criteria"
 }
@@ -59,6 +67,10 @@ node() { #subcommand
 
 create_site() { #subcommand
    post "$node_create_path" 'title=a_random_name&type=ftritem&field_ftritem_narrative[und][0][value]=timestamp&field_ftritem_public_summary[und][0][value]=timestamp&field_ftritem_date_visited[und][0][value][date]=10/04/2012&language=und&field_ftritem_field_trip[und][0][target_id]=5752&'
+}
+
+update_site() { #subcommand
+   put "$node_path" "site.data"
 }
 
 extract_subcommands() {
