@@ -10,6 +10,7 @@ site_visits_path="views/api_fieldtrips.json?display_id=sitevisits&filters[field_
 site_places_path="views/api_fieldtrips.json?display_id=place&filters[nid]=${2:-0}"
 site_action_items_path="views/api_fieldtrips.json?display_id=actionitems&args[nid]=${2:-0}&filters[field_actionitem_status_value]=1&filters[field_actionitem_status_value]=3"
 node_path="node/${2:-0}.json"
+node_create_path="node.json"
 
 cookie_file='/tmp/devtrac.cookie'
 
@@ -54,6 +55,10 @@ action_items() { #subcommand
 
 node() { #subcommand
   get "$node_path"
+}
+
+create_site() { #subcommand
+   post "$node_create_path" 'title=a_random_name&type=ftritem&field_ftritem_narrative[und][0][value]=timestamp&field_ftritem_public_summary[und][0][value]=timestamp&field_ftritem_date_visited[und][0][value][date]=10/04/2012&language=und&field_ftritem_field_trip[und][0][target_id]=5752&'
 }
 
 extract_subcommands() {
