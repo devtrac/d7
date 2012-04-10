@@ -19,14 +19,14 @@ login_criteria="username=${2:-username}&password=${3:-password}"
 get() {
   url="$end_point/$1"
   echo "GET $url" 1>&2
-  curl --cookie-jar "$cookie_file" --cookie "$cookie_file" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
+  curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
 }
 
 post() {
   url="$end_point/$1"
   echo "POST $url" 1>&2
   data="$2"
-  curl --cookie-jar "$cookie_file" --cookie "$cookie_file" --data "$data" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
+  curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" --data "$data" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
 }
 
 login() { #subcommand
