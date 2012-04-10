@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-end_point='http://devtracd7.mountbatten.net/api'
+end_point='http://geo.devtrac.org/api'
 
 login_path="user/login.json"
 logout_path="user/logout.json"
