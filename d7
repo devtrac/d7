@@ -70,6 +70,11 @@ actionitems() { #subcommand
   get "$site_action_items_path"
 }
 
+create_actionitem() { #subcommand
+  data=`cat actionitem.data`
+  post "$node_create_path" "$data"
+}
+
 node() { #subcommand
   get "$node_path"
 }
