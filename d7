@@ -18,14 +18,20 @@ login_criteria="username=${2:-username}&password=${3:-password}"
 
 get() {
   url="$end_point/$1"
-  echo "GET $url" 1>&2
+  echo "# GET $url" 1>&2
+  echo 1>&2
+  echo "# Response" 1>&2
   curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
 }
 
 post() {
   url="$end_point/$1"
-  echo "POST $url" 1>&2
+  echo "# POST $url" 1>&2
   data="$2"
+  echo 1>&2
+  echo "# DATA $data" 1>&2
+  echo 1>&2
+  echo "# Response" 1>&2
   curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" --data "$data" --globoff "$url" 2>/dev/null | python -mjson.tool 2>/dev/null
 }
 
@@ -33,7 +39,10 @@ put() {
   url="$end_point/$1"
   echo "# PUT $url" 1>&2
   filename="$2"
+  echo 1>&2
   echo "# FILE $filename" 1>&2
+  echo 1>&2
+  echo "# Response" 1>&2
   curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" -T "$filename" --globoff "$url"
 }
 
