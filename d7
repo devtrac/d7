@@ -46,7 +46,7 @@ put() {
   curl --trace-ascii 'curl.log' --cookie-jar "$cookie_file" --cookie "$cookie_file" -T "$filename" --globoff "$url"
 }
 
-login() { #subcommand
+login() { #subcommand <username> <password>
   post "$login_path" "$login_criteria"
 }
 
@@ -58,15 +58,15 @@ trip() { #subcommand
   get "$field_trip_path"
 }
 
-sites() { #subcommand
+sites() { #subcommand <fieldtrip_nid>
   get "$site_visits_path"
 }
 
-places() { #subcommand
+places() { #subcommand <ftritem_nid>
   get "$site_places_path"
 }
 
-actionitems() { #subcommand
+actionitems() { #subcommand <fieldtrip_nid> [ftritem_nid]
   get "$site_action_items_path"
 }
 
@@ -75,7 +75,7 @@ create_actionitem() { #subcommand
   post "$node_create_path" "$data"
 }
 
-node() { #subcommand
+node() { #subcommand <nid>
   get "$node_path"
 }
 
@@ -84,21 +84,25 @@ create_site() { #subcommand
    post "$node_create_path" "$data"
 }
 
-update_site() { #subcommand
+update_site() { #subcommand <ftritem_nid>
    put "$node_path" "site.data"
 }
 
 extract_subcommands() {
-  cat $0 | grep "#subcommand" | grep -v "\bgrep\b" | cut -d '(' -f 1
+  # cat $0 | grep "#subcommand" | grep -v "\bgrep\b" | cut -d '(' -f 1
+  cat $0 | grep "#subcommand" | grep -v "\bgrep\b" | sed -n '/(.*#subcommand/s///p'
 }
 
 usage() {
-  idented_sub_commands=`extract_subcommands | tr ' ' '\n' | sed 's/^/#         /'`
+  idented_sub_commands=`extract_subcommands | sed 's/^/#         /'`
   cat <<-EOF
+
 # d7 - A CLI util to provide assistances when dealing with DevTrac Drupal7 server
 #
 # Usage
+#
 #     ./$(basename $0) - Show this help
+#
 #     ./$(basename $0) <sub-command> - Access API corresponding to the <sub-command>
 $idented_sub_commands
 
