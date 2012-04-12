@@ -92,6 +92,11 @@ update_site() { #subcommand <ftritem_nid>
    put "$node_path" "site.data"
 }
 
+create_placetype() { #subcommand
+   data=`cat place.data`
+   post "$node_create_path" "$data"
+}
+
 extract_subcommands() {
   # cat $0 | grep "#subcommand" | grep -v "\bgrep\b" | cut -d '(' -f 1
   cat $0 | grep "#subcommand" | grep -v "\bgrep\b" | sed -n '/(.*#subcommand/s///p'
