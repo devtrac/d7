@@ -10,6 +10,8 @@ site_visits_path="views/api_fieldtrips.json?display_id=sitevisits&filters[field_
 site_places_path="views/api_fieldtrips.json?display_id=place&filters[nid]=${2:-0}&offset=0&limit=50"
 site_action_items_path="views/api_fieldtrips.json?display_id=actionitems&args[nid]=${2:-0}&filters[field_actionitem_status_value]=1&filters[field_actionitem_status_value]=3"
 placetypes_path="views/api_vocabularies.json?display_id=placetypes"
+user_profiles_path="views/api_user.json?display_id=users"
+questions_path="views/api_questions.json"
 if [ $# -eq 3 ]
 then
 site_action_items_path="${site_action_items_path}&args[field_actionitem_ftreportitem_target_id]=${3:-0}"
@@ -69,6 +71,14 @@ sites() { #subcommand <fieldtrip_nid>
 
 placetypes(){ #subcommand
   get "$placetypes_path"
+}
+
+user_profiles(){ #subcommand
+  get "$user_profiles_path"
+}
+
+questions(){ #subcommand
+  get "$questions_path"
 }
 
 places() { #subcommand <ftritem_nid>
