@@ -12,6 +12,7 @@ site_action_items_path="views/api_fieldtrips.json?display_id=actionitems&args[ni
 placetypes_path="views/api_vocabularies.json?display_id=placetypes"
 user_profiles_path="views/api_user.json?display_id=users"
 questions_path="views/api_questions.json"
+comment_path="comment.json"
 if [ $# -eq 3 ]
 then
 site_action_items_path="${site_action_items_path}&args[field_actionitem_ftreportitem_target_id]=${3:-0}"
@@ -110,6 +111,11 @@ update_site() { #subcommand <ftritem_nid>
 create_placetype() { #subcommand
    data=`cat place.data`
    post "$node_create_path" "$data"
+}
+
+create_comment(){ #subcommand
+   data=`cat comment.data`
+   post "$comment_path" "$data"
 }
 
 extract_subcommands() {
